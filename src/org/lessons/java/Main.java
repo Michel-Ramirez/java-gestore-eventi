@@ -1,14 +1,37 @@
 package org.lessons.java;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import org.lessons.java.eventmanager.Event;
+import org.lessons.java.eventmanager.EventProgram;
 
 public class Main {
 
 	public static void main(String[] args) throws Exception {
 
 		Scanner in = new Scanner(System.in);
+
+		List<Event> eventList = new ArrayList<>();
+
+		// TESTS AND BONUS MILESTONE 4
+
+//		Event e = new Event("Games week", 200, "28-12-2023");
+//		Event e2 = new Event("Lucca Comics", 1000, "16-06-2024");
+//		Concert c = new Concert("The Sup", 200, "31-12-2023", "00:30", "109.90");
+//
+//		eventList.add(e);
+//		eventList.add(c);
+//		eventList.add(e2);
+//
+//		EventProgram ep = new EventProgram("Prova", eventList);
+//
+//		System.out.println(e);
+//		System.out.println(c);
+//
+//		System.out.println();
+//		System.out.println(ep);
 
 		try {
 
@@ -25,7 +48,11 @@ public class Main {
 			String strSeats = in.nextLine();
 			int seats = Integer.valueOf(strSeats);
 
-			Event e = new Event(title, eventDate, seats);
+			Event e = new Event(title, seats, eventDate);
+
+			EventProgram ep = new EventProgram();
+
+			ep.addInEventList(e);
 
 			System.out.println("Vuoi prenotare un posto?: \n" + "y - Si" + " / " + "n - No");
 			String userChoose = in.nextLine().toLowerCase();
@@ -47,7 +74,7 @@ public class Main {
 					System.out.println("+---------------------------------+");
 					System.out.println();
 					System.out.println("+-----------------------------------+");
-					System.out.println("Hai prenotato: " + nBooking + " posti " + "per l'evento: " + "\n" + e.getTitle()
+					System.out.println("Hai prenotato: " + nBooking + " posti " + "per l'evento: " + "\n" + e.geteName()
 							+ " del " + e.getDate());
 					System.out.println("+-----------------------------------+");
 					System.out.println();
@@ -60,8 +87,11 @@ public class Main {
 					System.out.println("Attenzione valore non valido");
 				}
 
-			} else
-				return;
+			} else {
+				System.out.println();
+				System.out.println(e);
+				stopProgram();
+			}
 
 			System.out.println();
 			System.out.print("Vuoi disdire una prenotazione?" + "\n" + "y - Si" + " / " + "n - No");
@@ -86,22 +116,25 @@ public class Main {
 					System.err.println("Errore, non ci sono sufficienti prenotazioni");
 				}
 
+			} else {
+				stopProgram();
 			}
 
-//			--------| TEST |-----------
-//			e.booking("28-11-2023");
-//			System.out.println(e);
-//			e.cancellingReserv("28-11-2023");
-//			System.out.println(e);
-
-		} catch (
-
-		Exception e) {
+		} catch (Exception e) {
 			System.err.println("Errore: " + e.getMessage());
 		} finally {
 
 		}
 
+		in.close();
+	}
+
+	public static void stopProgram() {
+		System.out.println("+---------------------+");
+		System.out.println("| Programma terminato |");
+		System.out.println("+---------------------+");
+
+		return;
 	}
 
 }

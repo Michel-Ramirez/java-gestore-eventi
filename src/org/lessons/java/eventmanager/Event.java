@@ -5,16 +5,16 @@ import java.time.format.DateTimeFormatter;
 
 public class Event {
 
-	private String title;
+	private String eName;
 	private String date;
 	private int totNumplaces;
 	private int placeReserved = 0;
 
 	private LocalDate today = LocalDate.now();
 
-	public Event(String title, String date, int totNumplaces) throws Exception {
+	public Event(String eName, int totNumplaces, String date) throws Exception {
 
-		setTitle(title);
+		seteName(eName);
 		setDate(date);
 		setTotNumplaces(totNumplaces);
 
@@ -22,12 +22,12 @@ public class Event {
 
 	// GETTER & SETTER
 
-	public String getTitle() {
-		return title;
+	public String geteName() {
+		return eName;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void seteName(String eName) {
+		this.eName = eName;
 	}
 
 	public String getDate() {
@@ -37,14 +37,7 @@ public class Event {
 
 	public void setDate(String date) throws Exception {
 
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-
-		// PARSE DEL DATO IN MODO DA CREARE IL FORMATO CORRETTO
-		LocalDate userDate = LocalDate.parse(date, formatter);
-
-		// PRENDO LA DATA ODIERNA E LA FORMATTO IN STRINGA
-
-		if (!userDate.isAfter(today)) {
+		if (!dateFormatter(date).isAfter(today)) {
 			throw new Exception("The date entered has already passed");
 		}
 
@@ -71,6 +64,8 @@ public class Event {
 	private void setPlaceReserved(int placeReserved) {
 		this.placeReserved = placeReserved;
 	}
+
+	// OTHER METHODS
 
 	private LocalDate dateFormatter(String value) {
 
@@ -113,7 +108,7 @@ public class Event {
 	@Override
 	public String toString() {
 
-		return "Evento: " + getDate() + "-" + getTitle() + "\n" + "Posti riservati: " + placeReserved;
+		return "Evento: " + getDate() + "-" + geteName() + "\n" + "Posti riservati: " + placeReserved;
 	}
 
 }
