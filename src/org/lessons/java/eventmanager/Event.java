@@ -86,24 +86,27 @@ public class Event {
 		if (!dateFormatter(bookingDate).isAfter(today)) {
 			throw new Exception("the booking date has already passed");
 
-		} else if (placeReserved == totNumplaces) {
-			throw new Exception("There are no more places");
-
 		} else {
 			placeReserved++;
 		}
 
 	}
 
-	public void cancellingReserv(String bookingDate) throws Exception {
+	public void cancellingReserv(int value) throws Exception {
 
-		if (!dateFormatter(bookingDate).isAfter(today) || placeReserved == 0) {
-			throw new Exception("the booking date has already passed");
-		} else if (placeReserved == 0) {
-			throw new Exception("There are no reservations");
+		if (placeReserved == 0 || value < 0) {
+			throw new Exception("value not valid or actually no exist place reserved");
 		} else {
-			placeReserved--;
+			placeReserved -= value;
 		}
+
+	}
+
+	public int availableSeats() {
+
+		int availableSeats = totNumplaces - placeReserved;
+
+		return availableSeats;
 
 	}
 
